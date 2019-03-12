@@ -1,0 +1,24 @@
+{
+  "name": "redcapuzgent/randapidao",
+  "description": "A Data Access Object for redcapuzgent/randapi",
+  "keywords": ["api","rest","redcap","randapi"],
+  "homepage": "https://github.com/redcapuzgent/randapidao",
+  "readme": "README.md",
+  "license": "MIT",
+  "authors": [{
+    "name": "Bram Gadeyne",
+    "email": "bram.gadeyne@uzgent.be"
+  }],
+  "support": {
+    "issues": "https://github.com/redcapuzgent/randapidao/issues"
+  },
+  "autoload": {
+    "psr-4": {
+      "redcapuzgent\\Randapidao\\": "src/"
+    }
+  },
+  "require": {
+    "ext-json": "*",
+    "ext-curl": "*"
+  }
+}
