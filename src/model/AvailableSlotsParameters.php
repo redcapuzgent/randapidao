@@ -1,15 +1,8 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: BGADEYNE
- * Date: 12/03/2019
- * Time: 17:53
- */
 
 namespace redcapuzgent\Randapidao\model;
 
-
-class AvailableSlotsParameters
+class AvailableSlotsParameters implements \JsonSerializable
 {
     /**
      * @var string[]
@@ -31,6 +24,13 @@ class AvailableSlotsParameters
     public function getSourceFields()
     {
         return $this->source_fields;
+    }
+
+    public function jsonSerialize()
+    {
+        return [
+            'source_fields'=>$this->source_fields
+        ];
     }
 
 }

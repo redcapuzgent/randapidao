@@ -1,15 +1,8 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: BGADEYNE
- * Date: 12/03/2019
- * Time: 17:42
- */
 
 namespace redcapuzgent\Randapidao\model;
 
-
-class RandomizationField
+class RandomizationField implements \JsonSerializable
 {
     /**
      * @var string
@@ -45,6 +38,14 @@ class RandomizationField
     public function getValue()
     {
         return $this->value;
+    }
+
+    public function jsonSerialize()
+    {
+        return [
+            'key'=>$this->key,
+            'value'=>$this->value
+        ];
     }
 
 }

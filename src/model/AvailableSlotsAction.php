@@ -1,10 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: BGADEYNE
- * Date: 12/03/2019
- * Time: 17:55
- */
 
 namespace redcapuzgent\Randapidao\model;
 

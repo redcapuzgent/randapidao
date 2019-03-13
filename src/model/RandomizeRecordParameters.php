@@ -1,15 +1,8 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: BGADEYNE
- * Date: 12/03/2019
- * Time: 17:41
- */
 
 namespace redcapuzgent\Randapidao\model;
 
-
-class RandomizeRecordParameters
+class RandomizeRecordParameters implements \JsonSerializable
 {
     /**
      * @var string
@@ -103,7 +96,17 @@ class RandomizeRecordParameters
         return $this->eventName;
     } //: string = 'Event 1'
 
-
+    public function jsonSerialize()
+    {
+        return [
+            'recordId' => $this->recordId,
+            'fields' => $this->fields,
+            'resultFieldName'=>$this->resultFieldName,
+            'groupId' => $this->groupId,
+            'armName' => $this->armName,
+            'eventName' => $this->eventName
+        ];
+    }
 
 
 }

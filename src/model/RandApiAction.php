@@ -2,8 +2,7 @@
 
 namespace redcapuzgent\Randapidao\model;
 
-
-abstract class RandApiAction
+abstract class RandApiAction implements \JsonSerializable
 {
     /**
      * @var string
@@ -55,6 +54,15 @@ abstract class RandApiAction
     public function getParameters()
     {
         return $this->parameters;
+    }
+
+    public function jsonSerialize()
+    {
+        return [
+            'action'=>$this->action,
+            'token'=>$this->token,
+            'parameters'=>$this->parameters
+        ];
     }
 
 }

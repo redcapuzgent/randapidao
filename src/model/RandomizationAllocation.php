@@ -1,16 +1,10 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: BGADEYNE
- * Date: 12/03/2019
- * Time: 17:47
- */
 
 namespace redcapuzgent\Randapidao\model;
 
-use Exception;
+use \Exception;
 
-class RandomizationAllocation
+class RandomizationAllocation implements \JsonSerializable
 {
     /**
      * @var string[] Ordered list of source_field values. A maximum of 15 items is allowed.
@@ -50,6 +44,14 @@ class RandomizationAllocation
     public function getTargetField()
     {
         return $this->target_field;
+    }
+
+    public function jsonSerialize()
+    {
+        return[
+            'source_fields'=>$this->source_fields,
+            'target_field'=>$this->target_field
+        ];
     }
 
 }
