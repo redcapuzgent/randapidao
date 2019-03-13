@@ -1,13 +1,10 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: BGADEYNE
- * Date: 12/03/2019
- * Time: 11:24
- */
 
 namespace redcapuzgent\Randapidao;
 
+
+use redcapuzgent\Randapidao\model\RandApiAction;
+use redcapuzgent\Randapidao\model\RandAPIDAOException;
 
 class RandAPIDao
 {
@@ -15,22 +12,23 @@ class RandAPIDao
      * @var string
      */
     private $apiUrl;
-    /**
-     * @var string
-     */
-    private $apiToken;
 
-    public function __construct($apiToken, $apiUrl)
+    public function __construct($apiUrl)
     {
         $this->apiUrl = $apiUrl;
-        $this->apiToken = $apiToken;
     }
 
-    public function doCall($fields){
+    /**
+     * Perform a Randapi action
+     * @param RandApiAction $action
+     * @return bool|mixed|string
+     * @throws RandAPIDAOException
+     */
+    public function performAction(RandApiAction $action){
         $ch = curl_init();
 
         curl_setopt($ch, CURLOPT_URL, $this->apiUrl);
-        curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($fields, '', '&'));
+        curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($action, '', '&'));
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false); // Set to TRUE for production use
         curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, false); // Set to TRUE for production use
@@ -44,9 +42,11 @@ class RandAPIDao
 
         $output = curl_exec($ch);
         if(!$output){
-            echo 'Curl error: ' . curl_error($ch);
+            curl_close($ch);
+            throw new RandAPIDAOException('Curl error: ' . curl_error($ch));
+        }else{
+            curl_close($ch);
         }
-        curl_close($ch);
         $jsonDecoded = json_decode($output);
         if(is_array($jsonDecoded)){
             return $jsonDecoded;

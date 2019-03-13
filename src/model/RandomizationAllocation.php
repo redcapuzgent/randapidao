@@ -2,8 +2,6 @@
 
 namespace redcapuzgent\Randapidao\model;
 
-use \Exception;
-
 class RandomizationAllocation implements \JsonSerializable
 {
     /**
@@ -19,12 +17,12 @@ class RandomizationAllocation implements \JsonSerializable
      * RandomizationAllocation constructor.
      * @param array $source_fields
      * @param string $target_field
-     * @throws Exception
+     * @throws RandAPIDAOException
      */
     public function __construct(array $source_fields, string $target_field)
     {
         if(!sizeof($source_fields) < 1 || sizeof($source_fields) > 15){
-            throw new Exception("Invalid source_fields parameter");
+            throw new RandAPIDAOException("Invalid source_fields parameter");
         }
         $this->source_fields = $source_fields;
         $this->target_field = $target_field;
