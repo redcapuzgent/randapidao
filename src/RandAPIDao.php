@@ -3,8 +3,11 @@
 namespace redcapuzgent\Randapidao;
 
 
+use redcapuzgent\Randapidao\model\AddRecordsToAllocationTableAction;
+use redcapuzgent\Randapidao\model\AvailableSlotsAction;
 use redcapuzgent\Randapidao\model\RandApiAction;
 use redcapuzgent\Randapidao\model\RandAPIDAOException;
+use redcapuzgent\Randapidao\model\RandomizeRecordAction;
 
 class RandAPIDao
 {
@@ -19,13 +22,60 @@ class RandAPIDao
     }
 
     /**
+     * @param RandomizeRecordAction $action
+     * @param bool $verifySSLPeer
+     * @param int $verifySSLHost
+     * @return string
+     * @throws RandAPIDAOException
+     */
+    public function randomizeRecord(RandomizeRecordAction $action, bool $verifySSLPeer = true, int $verifySSLHost = 2): string{
+        $ret = $this->performAction($action,$verifySSLPeer,$verifySSLHost);
+        if(is_object($ret)){
+            throw new RandAPIDAOException("Object returned: ".print_r($ret,true));
+        }else{
+            return (string)$ret;
+        }
+    }
+
+    /**
+     * @param AvailableSlotsAction $action
+     * @param bool $verifySSLPeer
+     * @param int $verifySSLHost
+     * @return int
+     * @throws RandAPIDAOException
+     */
+    public function availableSlots(AvailableSlotsAction $action, bool $verifySSLPeer = true, int $verifySSLHost = 2): int
+    {
+        $ret = $this->performAction($action,$verifySSLPeer,$verifySSLHost);
+        if(is_object($ret)){
+            throw new RandAPIDAOException("Object returned: ".print_r($ret,true));
+        }else{
+            return (int)$ret;
+        }
+    }
+
+    /**
+     * @param AddRecordsToAllocationTableAction $action
+     * @param bool $verifySSLPeer
+     * @param int $verifySSLHost
+     * @throws RandAPIDAOException
+     */
+    public function addRecordsToAllocationTable(AddRecordsToAllocationTableAction $action, bool $verifySSLPeer = true, int $verifySSLHost = 2): void
+    {
+        $ret = $this->performAction($action, $verifySSLPeer, $verifySSLHost);
+        if(is_object($ret)){
+            throw new RandAPIDAOException("Object returned: ".print_r($ret,true));
+        }
+    }
+
+    /**
      * @param RandApiAction $action
      * @param bool $verifySSLPeer CURLOPT_SSL_VERIFYPEER value
      * @param int $verifySSLHost CURLOPT_SSL_VERIFYHOST value
      * @return bool|mixed|string
      * @throws RandAPIDAOException
      */
-    public function performAction(RandApiAction $action, bool $verifySSLPeer = true, int $verifySSLHost = 2){
+    private function performAction(RandApiAction $action, bool $verifySSLPeer = true, int $verifySSLHost = 2){
         $ch = curl_init();
 
         curl_setopt($ch, CURLOPT_URL, $this->apiUrl);

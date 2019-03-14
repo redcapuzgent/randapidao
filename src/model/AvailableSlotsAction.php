@@ -9,7 +9,7 @@ class AvailableSlotsAction extends RandApiAction
      * @param AvailableSlotsParameters $parameters
      * @param string $token
      */
-    public function __construct(AvailableSlotsParameters $parameters,$token)
+    public function __construct(AvailableSlotsParameters $parameters,string $token)
     {
         parent::__construct("availableSlots", $token, $parameters);
     }

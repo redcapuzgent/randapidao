@@ -4,7 +4,12 @@ namespace redcapuzgent\Randapidao\model;
 
 class RandomizeRecordAction extends RandApiAction
 {
-    public function __construct($token, RandomizeRecordParameters $parameters)
+    /**
+     * RandomizeRecordAction constructor.
+     * @param RandomizeRecordParameters $parameters
+     * @param string $token
+     */
+    public function __construct(RandomizeRecordParameters $parameters, string $token)
     {
         parent::__construct("randomizeRecord", $token, $parameters);
     }

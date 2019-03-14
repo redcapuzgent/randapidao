@@ -38,7 +38,7 @@ class RandomizeRecordParameters implements \JsonSerializable
      * @param string $armName The name of the arm. default = 'Arm 1'
      * @param string $eventName The name of the event. default = 'Event 1'
      */
-    public function __construct($recordId, array $fields, $resultFieldName, $groupId='', $armName= '', $eventName= 'Arm 1')
+    public function __construct(string $recordId, array $fields, $resultFieldName, $groupId='', $armName= 'Arm 1', $eventName= 'Event 1')
     {
         $this->recordId = $recordId;
         $this->fields = $fields;
