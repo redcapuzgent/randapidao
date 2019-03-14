@@ -25,7 +25,7 @@ abstract class RandApiAction implements \JsonSerializable
      * @param string $token
      * @param \stdClass $parameters
      */
-    public function __construct(string $action, string $token, \stdClass $parameters)
+    public function __construct(string $action, string $token, object $parameters)
     {
         $this->action = $action;
         $this->token = $token;

@@ -21,8 +21,8 @@ class RandomizationAllocation implements \JsonSerializable
      */
     public function __construct(array $source_fields, string $target_field)
     {
-        if(!sizeof($source_fields) < 1 || sizeof($source_fields) > 15){
-            throw new RandAPIDAOException("Invalid source_fields parameter");
+        if(sizeof($source_fields) < 1 || sizeof($source_fields) > 15){
+            throw new RandAPIDAOException("Invalid source_fields parameter. Array length was ".sizeof($source_fields));
         }
         $this->source_fields = $source_fields;
         $this->target_field = $target_field;

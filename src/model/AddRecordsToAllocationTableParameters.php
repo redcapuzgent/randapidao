@@ -16,7 +16,7 @@ class AddRecordsToAllocationTableParameters implements \JsonSerializable
 
     /**
      * AddRecordsToAllocationTableParameters constructor.
-     * @param int $project_status
+     * @param int $project_status 0 for development, 1 for production
      * @param RandomizationAllocation[] $allocations
      */
     public function __construct(int $project_status, array $allocations)

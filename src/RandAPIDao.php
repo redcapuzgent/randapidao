@@ -21,15 +21,15 @@ class RandAPIDao
     /**
      * @param RandApiAction $action
      * @param bool $verifySSLPeer CURLOPT_SSL_VERIFYPEER value
-     * @param bool $verifySSLHost CURLOPT_SSL_VERIFYHOST value
+     * @param int $verifySSLHost CURLOPT_SSL_VERIFYHOST value
      * @return bool|mixed|string
      * @throws RandAPIDAOException
      */
-    public function performAction(RandApiAction $action, bool $verifySSLPeer = true, bool $verifySSLHost = true){
+    public function performAction(RandApiAction $action, bool $verifySSLPeer = true, int $verifySSLHost = 2){
         $ch = curl_init();
 
         curl_setopt($ch, CURLOPT_URL, $this->apiUrl);
-        curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($action, '', '&'));
+        curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($action));
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, $verifySSLPeer); // Set to TRUE for production use
         curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, $verifySSLHost); // Set to TRUE for production use
@@ -43,8 +43,9 @@ class RandAPIDao
 
         $output = curl_exec($ch);
         if(!$output){
+            $curl_error = curl_error($ch);
             curl_close($ch);
-            throw new RandAPIDAOException('Curl error: ' . curl_error($ch));
+            throw new RandAPIDAOException("Curl error: $curl_error" );
         }else{
             curl_close($ch);
         }
