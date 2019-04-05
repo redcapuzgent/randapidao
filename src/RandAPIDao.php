@@ -5,6 +5,7 @@ namespace redcapuzgent\Randapidao;
 
 use redcapuzgent\Randapidao\model\AddRecordsToAllocationTableAction;
 use redcapuzgent\Randapidao\model\AvailableSlotsAction;
+use redcapuzgent\Randapidao\model\FindAIDAction;
 use redcapuzgent\Randapidao\model\RandApiAction;
 use redcapuzgent\Randapidao\model\RandAPIDAOException;
 use redcapuzgent\Randapidao\model\RandomizeRecordAction;
@@ -45,6 +46,16 @@ class RandAPIDao
      * @throws RandAPIDAOException
      */
     public function availableSlots(AvailableSlotsAction $action, bool $verifySSLPeer = true, int $verifySSLHost = 2): int
+    {
+        $ret = $this->performAction($action,$verifySSLPeer,$verifySSLHost);
+        if(is_object($ret)){
+            throw new RandAPIDAOException("Object returned: ".print_r($ret,true));
+        }else{
+            return (int)$ret;
+        }
+    }
+
+    public function findAid(FindAIDAction $action, bool $verifySSLPeer = true, int $verifySSLHost = 2): int
     {
         $ret = $this->performAction($action,$verifySSLPeer,$verifySSLHost);
         if(is_object($ret)){
