@@ -55,6 +55,14 @@ class RandAPIDao
         }
     }
 
+    /**
+     * Find the assigned allocation table ID (aid column) for a certain record.
+     * @param FindAIDAction $action
+     * @param bool $verifySSLPeer
+     * @param int $verifySSLHost
+     * @return int
+     * @throws RandAPIDAOException
+     */
     public function findAid(FindAIDAction $action, bool $verifySSLPeer = true, int $verifySSLHost = 2): int
     {
         $ret = $this->performAction($action,$verifySSLPeer,$verifySSLHost);

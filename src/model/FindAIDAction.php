@@ -7,8 +7,8 @@ class FindAIDAction extends RandApiAction
 {
     /**
      * FindAIDAction constructor.
-     * @param string $recordId
-     * @param string $token
+     * @param string $recordId The recordid to find the assigned allocation table record ID for.
+     * @param string $token A valid API token
      */
     public function __construct(string $recordId, string $token)
     {
