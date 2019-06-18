@@ -9,6 +9,7 @@ use redcapuzgent\Randapidao\model\FindAIDAction;
 use redcapuzgent\Randapidao\model\RandApiAction;
 use redcapuzgent\Randapidao\model\RandAPIDAOException;
 use redcapuzgent\Randapidao\model\RandomizeRecordAction;
+use redcapuzgent\Randapidao\model\UndoRandomizationAction;
 
 class RandAPIDao
 {
@@ -74,17 +75,39 @@ class RandAPIDao
     }
 
     /**
+     * Undo the randomization for a certain record
+     * @param UndoRandomizationAction $action
+     * @param bool $verifySSLPeer
+     * @param int $verifySSLHost
+     * @return bool
+     * @throws RandAPIDAOException
+     */
+    public function undoRandomization(UndoRandomizationAction $action, bool $verifySSLPeer = true, int $verifySSLHost = 2): bool
+    {
+        $ret = $this->performAction($action,$verifySSLPeer,$verifySSLHost);
+        if(is_object($ret)){
+            throw new RandAPIDAOException("Object returned: ".print_r($ret,true));
+        }else{
+            return $ret == "success";
+        }
+    }
+
+    /**
      * @param AddRecordsToAllocationTableAction $action
      * @param bool $verifySSLPeer
      * @param int $verifySSLHost
+     * @return bool
      * @throws RandAPIDAOException
      */
-    public function addRecordsToAllocationTable(AddRecordsToAllocationTableAction $action, bool $verifySSLPeer = true, int $verifySSLHost = 2): void
+    public function addRecordsToAllocationTable(AddRecordsToAllocationTableAction $action, bool $verifySSLPeer = true, int $verifySSLHost = 2): bool
     {
         $ret = $this->performAction($action, $verifySSLPeer, $verifySSLHost);
         if(is_object($ret)){
             throw new RandAPIDAOException("Object returned: ".print_r($ret,true));
+        }else{
+            return $ret == "success";
         }
+
     }
 
     /**
@@ -122,6 +145,8 @@ class RandAPIDao
         if(is_array($jsonDecoded)){
             return $jsonDecoded;
         }else if(is_object($jsonDecoded)){
+            return $jsonDecoded;
+        }else if(is_string($jsonDecoded)) {
             return $jsonDecoded;
         }else{
             return $output;

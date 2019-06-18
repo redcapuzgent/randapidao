@@ -2,6 +2,8 @@
 
 namespace redcapuzgent\Randapidao\model;
 
+use stdClass;
+
 abstract class RandApiAction implements \JsonSerializable
 {
     /**
@@ -15,7 +17,7 @@ abstract class RandApiAction implements \JsonSerializable
     public $token;
 
     /**
-     * @var \stdClass
+     * @var stdClass | string
      */
     public $parameters;
 
@@ -23,9 +25,9 @@ abstract class RandApiAction implements \JsonSerializable
      * RandApiAction constructor.
      * @param string $action
      * @param string $token
-     * @param \stdClass $parameters
+     * @param stdClass | string $parameters
      */
-    public function __construct(string $action, string $token, object $parameters)
+    public function __construct(string $action, string $token, $parameters)
     {
         $this->action = $action;
         $this->token = $token;
@@ -49,7 +51,7 @@ abstract class RandApiAction implements \JsonSerializable
     }
 
     /**
-     * @return \stdClass
+     * @return stdClass | string
      */
     public function getParameters()
     {
