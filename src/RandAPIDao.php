@@ -5,6 +5,7 @@ namespace redcapuzgent\Randapidao;
 
 use redcapuzgent\Randapidao\model\AddRecordsToAllocationTableAction;
 use redcapuzgent\Randapidao\model\AvailableSlotsAction;
+use redcapuzgent\Randapidao\model\ChangeSourcesAction;
 use redcapuzgent\Randapidao\model\FindAIDAction;
 use redcapuzgent\Randapidao\model\RandApiAction;
 use redcapuzgent\Randapidao\model\RandAPIDAOException;
@@ -27,7 +28,7 @@ class RandAPIDao
      * @param RandomizeRecordAction $action
      * @param bool $verifySSLPeer
      * @param int $verifySSLHost
-     * @return string
+     * @return int The assigned aid
      * @throws RandAPIDAOException
      */
     public function randomizeRecord(RandomizeRecordAction $action, bool $verifySSLPeer = true, int $verifySSLHost = 2): string{
@@ -35,7 +36,23 @@ class RandAPIDao
         if(is_object($ret)){
             throw new RandAPIDAOException("Object returned: ".print_r($ret,true));
         }else{
-            return (string)$ret;
+            return (int)$ret;
+        }
+    }
+
+    /**
+     * @param ChangeSourcesAction $action
+     * @param bool $verifySSLPeer
+     * @param int $verifySSLHost
+     * @return int The new aid
+     * @throws RandAPIDAOException
+     */
+    public function changeSources(ChangeSourcesAction $action, bool $verifySSLPeer = true, int $verifySSLHost = 2): string{
+        $ret = $this->performAction($action,$verifySSLPeer,$verifySSLHost);
+        if(is_object($ret)){
+            throw new RandAPIDAOException("Object returned: ".print_r($ret,true));
+        }else{
+            return (int)$ret;
         }
     }
 
@@ -43,7 +60,7 @@ class RandAPIDao
      * @param AvailableSlotsAction $action
      * @param bool $verifySSLPeer
      * @param int $verifySSLHost
-     * @return int
+     * @return int The number of avaiilable slots
      * @throws RandAPIDAOException
      */
     public function availableSlots(AvailableSlotsAction $action, bool $verifySSLPeer = true, int $verifySSLHost = 2): int
@@ -61,7 +78,7 @@ class RandAPIDao
      * @param FindAIDAction $action
      * @param bool $verifySSLPeer
      * @param int $verifySSLHost
-     * @return int
+     * @return int The aid
      * @throws RandAPIDAOException
      */
     public function findAid(FindAIDAction $action, bool $verifySSLPeer = true, int $verifySSLHost = 2): int
@@ -107,7 +124,6 @@ class RandAPIDao
         }else{
             return $ret == "success";
         }
-
     }
 
     /**
