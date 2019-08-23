@@ -57,6 +57,22 @@ class RandAPIDao
     }
 
     /**
+     * @param ChangeTargetAction $action
+     * @param bool $verifySSLPeer
+     * @param int $verifySSLHost
+     * @return int The new aid
+     * @throws RandAPIDAOException
+     */
+    public function changeTarget(ChangeTargetAction $action, bool $verifySSLPeer = true, int $verifySSLHost = 2): string{
+        $ret = $this->performAction($action,$verifySSLPeer,$verifySSLHost);
+        if(is_object($ret)){
+            throw new RandAPIDAOException("Object returned: ".print_r($ret,true));
+        }else{
+            return (int)$ret;
+        }
+    }
+
+    /**
      * @param AvailableSlotsAction $action
      * @param bool $verifySSLPeer
      * @param int $verifySSLHost
